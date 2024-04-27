@@ -1,0 +1,26 @@
+73%  - Section 1 – Analyze and Optimize Storage Performance
+Questions - 1,3 
+
+74%  - Section 2 – Analyze and Optimize Network Performance 
+Questions - 4,6,8
+
+46%  - Section 3 - Advanced Configuration and Troubleshooting 
+Questions - 2,10,12
+
+50%  - Section 4 – Analyze and Optimize VM Performance 
+Questions - 5,7,9,15
+
+100% - Section 5 – Business Continuity
+Questions - 11,
+
+
+
+
+Notes:
+------
+In 9th question need to add the below parameter:
+- vm.update CentOS\ VM extra_flags= qemu_path=
+
+
+Hello Sahana,
+I login into the learning the way you guided me, Can you please now merge this with the other account and also can you please let me know what course need to complete for the VCP 7.x Certification?

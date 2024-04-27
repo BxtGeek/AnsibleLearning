@@ -1,0 +1,25 @@
+---
+- hosts: all
+  tasks:
+    
+    - name: Update repo index
+      yum:
+        update_cache: yes
+
+    - name: status of httpd package
+      package_facts:
+        manager: auto
+      register: httpd_package_info
+
+    - name: status of php package
+      package_facts:
+        manager: auto
+      register: php_package_info
+
+    - name: Print HTTPd package status
+      debug:
+        var: httpd_package_info
+
+    - name: Print PHP package status
+      debug:
+        var: php_package_info

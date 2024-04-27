@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+    
+    - name: Update repo index
+      yum:
+        update_cache: yes
+
+    - name: Remove httpd package
+      dnf:
+        name: httpd
+        state: absent
