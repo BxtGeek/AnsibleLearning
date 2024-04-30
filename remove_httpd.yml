@@ -1,12 +1,53 @@
 ---
-- hosts: all
+- hosts: nginx_servers
   tasks:
-    
-    - name: Update repo index
-      yum:
-        update_cache: yes
+    - name: Remove Nginx configuration block
+      blockinfile:
+        path: /etc/nginx/nginx.conf
+        block: |
+          upstream backend {
+              server 192.168.1.86;
+              server 192.168.1.87;
+          }
 
-    - name: Remove httpd package
-      dnf:
+          server {
+              listen 80;
+
+              location / {
+                  proxy_pass http://backend;
+              }
+          }
+        state: absent
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+
+    - name: Stop and disable nginx service
+      service:
+        name: nginx
+        enabled: no
+        state: stopped
+
+    - name: Uninstall nginx package
+      yum:
+        name: nginx
+        state: absent
+
+- hosts: web_servers
+  tasks:
+    - name: Stop and disable httpd service
+      service:
+        name: httpd
+        enabled: no
+        state: stopped
+
+    - name: Uninstall httpd package
+      yum:
         name: httpd
         state: absent
+
+- hosts: all
+  tasks:
+    - name: Start and enable Firewalld
+      service:
+        name: firewalld
+        enabled: yes
+        state: started
