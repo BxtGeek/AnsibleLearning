@@ -1,0 +1,11 @@
+# further consolidating the file
+---
+- hosts: ctr_servers
+  tasks:
+  - name: install apache and php packages
+    package:
+      name:
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: latest
+      update_cache: yes

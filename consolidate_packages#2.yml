@@ -1,0 +1,11 @@
+# unistalling the apache and php
+---
+- hosts: ctr_servers
+  tasks:
+  - name: unistalling the apache and php
+    package:
+      name:
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: absent
+      update_cache: yes
