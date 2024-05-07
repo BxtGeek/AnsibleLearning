@@ -10,3 +10,29 @@
     yum:
       update_cache: yes
     when: ansible_distribution == "Rocky"
+
+  - name: install httpd package on Rocky
+    yum:
+      name: httpd
+      state: latest
+    when: ansible_distribution == "Rocky"
+  
+  - name: install apache2 package in ubuntu
+    apt:
+      name: apache2
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Start and enable httpd service on rocky
+    service:
+      name: httpd
+      enabled: yes
+      state: started
+    when: ansible_distribution == "Rocky" 
+  
+  - name: Disable Firewalled on rocky
+    service:
+      name: firewalld
+      enabled: no
+      state: stopped
+    when: ansible_distribution == "Rocky"
