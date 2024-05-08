@@ -1,0 +1,34 @@
+# installing a zip package using ansible
+---
+- hosts: ctr_servers
+  pre_tasks:
+    - name: update rocky server
+      tags: always
+      yum:
+        update_cache: yes
+        update_only: yes
+      when: ansible_distribution == "Rocky"
+
+    - name: update ubuntu server 
+      tags: always
+      apt:
+        update_cache: yes
+        upgrade: yes
+      when: ansible_distribution == "Ubuntu"
+
+  tasks:
+    - name: install zip package
+      tags: zip
+      package:
+        name: unzip
+        state: latest
+    
+    - name: install terraform
+      tags: terraform
+      unarchive:
+        src: https://releases.hashicorp.com/terraform/1.8.3/terraform_1.8.3_linux_amd64.zip
+        dest: /usr/local/bin
+        remote_src: yes
+        mode: 0755
+        owner: root
+        group: root

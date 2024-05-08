@@ -1,0 +1,15 @@
+# removing httpd on ctr servers
+---
+- hosts: ctr_servers
+  tasks:
+    - name: remove httpd rocky
+      yum:
+        name: httpd
+        state: absent
+      when: ansible_distribution == "Rocky"
+    
+    - name: remove apache2 ubuntu
+      apt:
+        name: apache2
+        state: absent
+      when: ansible_distribution == "Ubuntu"
