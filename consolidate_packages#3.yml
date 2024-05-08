@@ -25,7 +25,7 @@
         - web_server
       yum:
         name: httpd
-        state: present
+        state: latest
       when: ansible_distribution == "Rocky"
 
     - name: install apache2 (ubuntu)

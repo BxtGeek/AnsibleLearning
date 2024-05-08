@@ -1,0 +1,42 @@
+# copying file to remote server using ansible
+
+---
+- hosts : ctr_servers
+  pre_tasks:
+    - name: update(ubuntu)
+      tags: always
+      apt:
+        update_cache: yes
+        upgrade: yes
+      when: ansible_distribution == "Ubuntu"
+    
+    - name: update(rocky)
+      tags: always
+      yum:
+        update_cache: yes
+        update_only: yes
+      when: ansible_distribution == "Rocky"
+
+  tasks:
+    - name: install apache2 in "Ubuntu"
+      tags: apache2, httpd
+      apt:
+        name: apache2
+        state: latest
+      when: ansible_distribution == "Ubuntu"
+    
+    - name: install httpd in "Rocky"
+      tags: apache2, tags
+      yum:
+        name: httpd
+        state: latest
+      when: ansible_distribution == "Rocky"
+    
+    - name: copy default html file for site
+      tags: apache2, httpd
+      copy:
+        src: default_site.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
