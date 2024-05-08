@@ -1,0 +1,38 @@
+# learning about tags in the ansible 
+
+---
+- hosts: ctr_servers
+  pre_tasks:
+    - name: update (rocky)
+      tags: always
+      yum:
+        update_only: yes
+        update_cache: yes 
+      when: ansible_distribution == "Rocky"
+    
+    - name: update (ubuntu)
+      tags: always
+      apt:
+        update_cache: yes 
+        upgrade: yes
+      when: ansible_distribution == "Ubuntu"
+
+- hosts: ctr_servers
+  tasks:  
+    - name: install httpd(rocky)
+      tags: 
+        - httpd
+        - web_server
+      yum:
+        name: httpd
+        state: present
+      when: ansible_distribution == "Rocky"
+
+    - name: install apache2 (ubuntu)
+      tags: 
+        - apache
+        - apache2
+      apt:
+        name: apache2
+        state: latest
+      when: ansible_distribution == "Ubuntu"
